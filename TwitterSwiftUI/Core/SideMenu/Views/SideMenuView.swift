@@ -29,19 +29,22 @@ struct SideMenuView: View {
             }
             
             
-            ForEach(SideMenuViewModel.allCases, id: \.rawValue) { option in
-                HStack(spacing: 16) {
-                    Image(systemName: option.imageName)
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    
-                    Text(option.title)
-                        .font(.subheadline)
-                    
-                    Spacer()
+            ForEach(SideMenuViewModel.allCases, id: \.rawValue) { viewModal in
+                if viewModal == .profile {
+                    NavigationLink {
+                        ProfileView()
+                    } label: {
+                        SideMenuOptionRowView(viewModal: viewModal)
+                    }
+                }else if viewModal == .logout {
+                    Button {
+                        print("Hanle logout....")
+                    } label:{
+                        SideMenuOptionRowView(viewModal: viewModal)
+                    }
+                }else{
+                    SideMenuOptionRowView(viewModal: viewModal)
                 }
-                .frame(height:20)
-                .padding(.vertical)
             }
             
             
@@ -56,3 +59,6 @@ struct SideMenuView_Previews: PreviewProvider {
         SideMenuView()
     }
 }
+
+
+    
